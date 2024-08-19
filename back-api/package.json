@@ -1,0 +1,32 @@
+{
+  "name": "back-api",
+  "version": "1.0.0",
+  "description": "Mini Project: Task Management API",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/index.js",
+    "start": "node src/index.js",
+    "lint": "eslint"
+
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NorbertCiro/task-management-api.git"
+  },
+  "author": "Norberto Salazar",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/NorbertCiro/task-management-api/issues"
+  },
+  "homepage": "https://github.com/NorbertCiro/task-management-api#readme",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "express": "^4.19.2",
+    "mysql2": "^3.11.0",
+    "sequelize": "^6.37.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}

@@ -1,10 +1,12 @@
 const bodyParser = require('body-parser');
 const express = require('express');
+const cors = require('cors');
 const { sequelize } = require('./models');
 
 const app = express();
 app.use(bodyParser.json());
 
+app.use(cors())
 // Routes
 app.use('/api/task', require('./routes/tasks'));
 

@@ -1,0 +1,25 @@
+version: "3.1"
+
+services:
+  db:
+    image: mysql:latest # Especifica la versión más reciente de MySQL
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: my-secret-pw # Configura la contraseña del usuario root
+      MYSQL_DATABASE: api_tasks # Crea una base de datos inicial
+    ports:
+      - "3306:3306" # Mapea el puerto 3306 del contenedor al puerto 3306 del host
+    volumes:
+      - db_data:/var/lib/mysql # Volumen para persistir los datos de MySQL
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest # Especifica la versión más reciente de phpMyAdmin
+    restart: always
+    ports:
+      - "8080:80" # Mapea el puerto 80 del contenedor al puerto 8080 del host
+    environment:
+      PMA_HOST: db # phpMyAdmin se conectará al servicio 'db'
+      MYSQL_ROOT_PASSWORD: my-secret-pw # Contraseña del usuario root de MySQL
+
+volumes:
+  db_data:

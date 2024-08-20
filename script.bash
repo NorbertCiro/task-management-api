@@ -10,13 +10,20 @@ BACKEND_DIR="back-api" # Reemplaza con el directorio del backend en el proyecto
 # git clone "$REPO_URL" proyecto-clon
 # cd proyecto-clon || { echo "No se pudo entrar en el directorio del proyecto"; exit 1; }
 
+# Inicializar Docker Compose
+echo "Inicializando Docker Compose..."
+docker compose up -d || { echo "No se pudo iniciar Docker Compose"; exit 1; }
+# sleep 30
+
 # Instalar dependencias del frontend
 if [ -d "$FRONTEND_DIR" ]; then
   echo "Instalando dependencias del frontend..."
   cd "$FRONTEND_DIR" || { echo "No se pudo entrar en el directorio del frontend"; exit 1; }
   npm install || { echo "No se pudieron instalar las dependencias del frontend"; exit 1; }
   echo "Iniciando el frontend..."
-  npm start || { echo "No se pudo iniciar el frontend"; exit 1; }
+  npm run dev & # Ejecutar en segundo plano
+  FRONTEND_PID=$! # Obtener el PID del proceso del frontend
+  # sleep 10
   cd ..
 else
   echo "Directorio del frontend no encontrado."
@@ -34,8 +41,11 @@ else
   echo "Directorio del backend no encontrado."
 fi
 
-# Inicializar Docker Compose
-echo "Inicializando Docker Compose..."
-docker-compose up -d || { echo "No se pudo iniciar Docker Compose"; exit 1; }
+# Opcional: Esperar a que los servicios se inicien completamente
+echo "Esperando a que los servicios se inicien..."
+# sleep 10 # Ajusta el tiempo de espera según sea necesario
+
+# Opcional: Puedes finalizar el proceso del frontend después de que Docker Compose esté iniciado si es necesario
+kill $FRONTEND_PID
 
 echo "Proceso completado."
